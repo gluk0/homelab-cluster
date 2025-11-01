@@ -179,6 +179,9 @@ spec:
       jobLoggers:
         - file
       loggerSweeperDuration: 14
+      startupProbe:
+        enabled: true
+        initialDelaySeconds: 30
       resources:
         requests:
           memory: 256Mi
