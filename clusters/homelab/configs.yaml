@@ -11,5 +11,3 @@ spec:
     name: flux-system
   path: ./infrastructure/configs
   prune: true
-  dependsOn:
-    - name: infrastructure
