@@ -1,0 +1,10 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: metallb
+  namespace: flux-system
+spec:
+  interval: 24h
+  # I'm using the official MetalLB helm repo to get LoadBalancer support in my bare metal cluster
+  url: https://metallb.github.io/metallb

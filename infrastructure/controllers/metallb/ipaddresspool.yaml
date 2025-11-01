@@ -1,0 +1,21 @@
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: homelab-pool
+  namespace: metallb-system
+spec:
+  addresses:
+  # I'm reserving 10.20.0.50-60 from my node network (10.20.0.0/24) for LoadBalancer services
+  # My nodes use .25, .26, .31, .40, .41 so these IPs should be free
+  # I need to make sure my DHCP server doesn't assign these IPs to other devices
+  - 10.20.0.50-10.20.0.60
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: homelab-l2
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - homelab-pool
