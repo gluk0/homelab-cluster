@@ -9,7 +9,6 @@ spec:
   chart:
     spec:
       chart: metallb
-      # I want to stay on the 0.14.x release track for stability
       version: '0.14.x'
       sourceRef:
         kind: HelmRepository
@@ -23,5 +22,4 @@ spec:
   upgrade:
     crds: CreateReplace
     remediation:
-      # I want Flux to retry if something goes wrong during upgrades
       retries: 3

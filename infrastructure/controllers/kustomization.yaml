@@ -2,6 +2,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  # MetalLB must be deployed before ingress-nginx so LoadBalancer IPs can be assigned
+  # MetalLB must be deployed before ingress-nginx so LoadBalancer IPs can be assigned.
   - metallb
   - ingress-nginx
+
