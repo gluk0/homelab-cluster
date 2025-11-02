@@ -1,0 +1,28 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: harbor-tls
+  namespace: harbor
+spec:
+  secretName: harbor-tls
+  issuerRef:
+    name: ca-issuer
+    kind: ClusterIssuer
+  commonName: harbour.homelab.local
+  dnsNames:
+    - harbour.homelab.local
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: harbor-notary-tls
+  namespace: harbor
+spec:
+  secretName: harbor-notary-tls
+  issuerRef:
+    name: ca-issuer
+    kind: ClusterIssuer
+  commonName: notary.harbour.homelab.local
+  dnsNames:
+    - notary.harbour.homelab.local
