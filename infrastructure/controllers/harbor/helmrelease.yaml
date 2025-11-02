@@ -26,13 +26,13 @@ spec:
     expose:
       type: loadBalancer
       tls:
-        enabled: false
-        certSource: auto
+        enabled: true
+        certSource: secret
         auto:
           commonName: ""
         secret:
-          secretName: ""
-          notarySecretName: ""
+          secretName: "harbor-tls"
+          notarySecretName: "harbor-notary-tls"
       loadBalancer:
         name: harbor
         IP: ""
@@ -42,7 +42,7 @@ spec:
         annotations: {}
         sourceRanges: []
 
-    externalURL: http://harbor.local
+    externalURL: https://harbour.homelab.local
 
     internalTLS:
       enabled: false
