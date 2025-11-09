@@ -5,5 +5,4 @@ resources:
   - metallb
   - ingress-nginx
   - cert-manager
-  - harbor
 
