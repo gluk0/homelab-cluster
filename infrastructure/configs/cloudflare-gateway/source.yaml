@@ -1,0 +1,15 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: cloudflare-kubernetes-gateway
+  namespace: flux-system
+spec:
+  interval: 24h
+  url: https://github.com/pl4nty/cloudflare-kubernetes-gateway
+  ref:
+    tag: v0.8.1
+  ignore: |
+    /*
+    !/config
+# Only take /config the rest is the actual source of the controller class itself taht isn't needed to be pulled by flux
