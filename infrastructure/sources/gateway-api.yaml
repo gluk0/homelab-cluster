@@ -2,8 +2,8 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: ingress-nginx
+  name: gateway-api
   namespace: flux-system
 spec:
   interval: 24h
-  url: https://kubernetes.github.io/ingress-nginx
+  url: https://kubernetes-sigs.github.io/gateway-api
