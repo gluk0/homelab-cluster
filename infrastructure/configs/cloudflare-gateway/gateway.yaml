@@ -22,7 +22,7 @@ spec:
   - name: gateway
     namespace: cloudflare-gateway
   hostnames:
-  - site.gluk0.sh
+  - gluk0.sh
   rules:
   - backendRefs:
     - name: website
