@@ -4,5 +4,4 @@ kind: Kustomization
 namespace: flux-system
 resources:
   - cert-manager.yaml
-  - gateway-api.yaml
   - metallb.yaml
