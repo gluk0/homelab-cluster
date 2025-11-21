@@ -5,3 +5,4 @@ resources:
   - flux-system
   - infrastructure.yaml
   - configs.yaml
+  - cloudflare-gateway-controller.yaml
