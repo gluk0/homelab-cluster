@@ -5,3 +5,4 @@ namespace: flux-system
 resources:
   - cert-manager.yaml
   - metallb.yaml
+  - cloudflare-gateway.yaml

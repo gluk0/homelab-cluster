@@ -5,3 +5,4 @@ resources:
   - cert-manager
   - gateway-api
   - metallb
+  - cloudflare-gateway
