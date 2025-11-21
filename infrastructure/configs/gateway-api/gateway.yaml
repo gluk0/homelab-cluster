@@ -11,7 +11,7 @@ spec:
 # kind: Gateway
 # metadata:
 #   name: homelab-gateway
-#   namespace: gateway-system
+#   namespace: gateway-system  
 # spec:
 #   gatewayClassName: homelab-gateway
 #   listeners:
