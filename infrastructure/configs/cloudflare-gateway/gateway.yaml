@@ -19,7 +19,7 @@ metadata:
   namespace: default
 spec:
   parentRefs:
-  - name: gateway
+  - name: homelab-gateway
     namespace: cloudflare-gateway
   hostnames:
   - gluk0.sh
