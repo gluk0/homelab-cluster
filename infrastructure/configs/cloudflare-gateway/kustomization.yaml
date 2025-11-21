@@ -4,7 +4,5 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - secret.yaml
-  - source.yaml
-  - kustomization-controller.yaml
   - gatewayclass.yaml
   - gateway.yaml
