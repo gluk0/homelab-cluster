@@ -23,6 +23,8 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       automountServiceAccountToken: false
+      imagePullSecrets:
+      - name: ghcr-pull-secret
       volumes:
       - name: tmp
         emptyDir: {}
