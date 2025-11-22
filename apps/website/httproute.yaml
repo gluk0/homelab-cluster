@@ -13,6 +13,6 @@ spec:
   - www.gluk0.sh
   rules:
   - backendRefs:
-    - name: istio-ingressgateway
+    - name: istio-ilb-gateway
       namespace: istio-system
       port: 80
