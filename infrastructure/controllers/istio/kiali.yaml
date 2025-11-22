@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: kiali-server
-      version: 1.93.0
+      version: 2.18.0
       sourceRef:
         kind: HelmRepository
         name: kiali
@@ -32,8 +32,6 @@ spec:
     external_services:
       istio:
         root_namespace: istio-system
-      prometheus:
-        url: "http://prometheus-server.monitoring:80"
     server:
       web_root: /kiali
     service:
