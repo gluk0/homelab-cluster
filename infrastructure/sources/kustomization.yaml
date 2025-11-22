@@ -8,3 +8,4 @@ resources:
   - cloudflare-gateway.yaml
   - istio.yaml
   - kiali.yaml
+  - prometheus.yaml
