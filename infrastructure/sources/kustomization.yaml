@@ -6,3 +6,4 @@ resources:
   - cert-manager.yaml
   - metallb.yaml
   - cloudflare-gateway.yaml
+  - istio.yaml
