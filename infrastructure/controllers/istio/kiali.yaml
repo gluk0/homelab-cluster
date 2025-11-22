@@ -29,10 +29,9 @@ spec:
     deployment:
       accessible_namespaces:
       - "**"
+      service_type: LoadBalancer
     external_services:
       istio:
         root_namespace: istio-system
     server:
       web_root: /kiali
-    service:
-      type: LoadBalancer
