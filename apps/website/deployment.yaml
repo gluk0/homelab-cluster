@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: website
-  namespace: default
+  namespace: gluk0
   labels:
     app: website
 spec:
