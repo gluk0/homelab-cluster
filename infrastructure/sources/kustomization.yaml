@@ -7,3 +7,4 @@ resources:
   - metallb.yaml
   - cloudflare-gateway.yaml
   - istio.yaml
+  - kiali.yaml

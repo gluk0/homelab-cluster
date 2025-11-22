@@ -6,3 +6,4 @@ resources:
   - base.yaml
   - istiod.yaml
   - ilb-gateway.yaml
+  - kiali.yaml
