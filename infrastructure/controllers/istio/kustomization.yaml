@@ -5,5 +5,4 @@ resources:
   - namespace.yaml
   - base.yaml
   - istiod.yaml
-  - ingressgateway.yaml
   - ilb-gateway.yaml
