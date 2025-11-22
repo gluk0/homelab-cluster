@@ -35,6 +35,7 @@ spec:
       containers:
       - name: website
         image: ghcr.io/gluk0/website:main
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
           name: http
