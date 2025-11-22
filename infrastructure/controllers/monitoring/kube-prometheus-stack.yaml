@@ -27,13 +27,7 @@ spec:
     prometheus:
       prometheusSpec:
         retention: 7d
-        storageSpec:
-          volumeClaimTemplate:
-            spec:
-              accessModes: ["ReadWriteOnce"]
-              resources:
-                requests:
-                  storage: 10Gi
+        storageSpec: {}
         resources:
           requests:
             cpu: 200m
@@ -55,15 +49,6 @@ spec:
         limits:
           cpu: 500m
           memory: 512Mi
-      datasources:
-        datasources.yaml:
-          apiVersion: 1
-          datasources:
-          - name: Prometheus
-            type: prometheus
-            url: http://kube-prometheus-stack-prometheus.monitoring:9090
-            access: proxy
-            isDefault: true
     alertmanager:
       enabled: true
       service:
