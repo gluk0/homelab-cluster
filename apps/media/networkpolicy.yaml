@@ -24,7 +24,9 @@ spec:
   - Egress
   ingress:
   - from:
-    - namespaceSelector: {}
+    - namespaceSelector:
+        matchLabels:
+          name: istio-system
     ports:
     - protocol: TCP
       port: 8096
@@ -45,7 +47,9 @@ spec:
   - Egress
   ingress:
   - from:
-    - namespaceSelector: {}
+    - namespaceSelector:
+        matchLabels:
+          name: istio-system
     ports:
     - protocol: TCP
       port: 8080
@@ -66,7 +70,9 @@ spec:
   - Egress
   ingress:
   - from:
-    - namespaceSelector: {}
+    - namespaceSelector:
+        matchLabels:
+          name: istio-system
     ports:
     - protocol: TCP
       port: 3000
