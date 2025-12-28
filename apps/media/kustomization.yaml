@@ -4,13 +4,10 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - wireguard-secret.yaml
-  - jellyfin-pvc.yaml
   - jellyfin-deployment.yaml
   - jellyfin-service.yaml
-  - qbittorrent-pvc.yaml
   - qbittorrent-deployment.yaml
   - qbittorrent-service.yaml
-  - debrid-media-manager-pvc.yaml
   - debrid-media-manager-deployment.yaml
   - debrid-media-manager-service.yaml
   - networkpolicy.yaml
