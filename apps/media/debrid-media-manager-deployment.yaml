@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: debrid-media-manager
-        image: ghcr.io/debridmediamanager/debrid-media-manager:latest
+        image: debridmediamanager/debrid-media-manager:latest
         ports:
         - containerPort: 3000
           name: http
