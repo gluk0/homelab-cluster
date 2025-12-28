@@ -1,0 +1,121 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qbittorrent
+  namespace: media
+  labels:
+    app: qbittorrent
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: qbittorrent
+  template:
+    metadata:
+      labels:
+        app: qbittorrent
+    spec:
+      initContainers:
+      - name: wireguard-init
+        image: linuxserver/wireguard:latest
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+            - SYS_MODULE
+          privileged: true
+        command:
+        - sh
+        - -c
+        - |
+          echo "Setting up WireGuard..."
+          if [ ! -f /config/wg0.conf ]; then
+            echo "WireGuard config not found! Using placeholder."
+            exit 1
+          fi
+          wg-quick up wg0 || true
+          echo "WireGuard VPN is up"
+        volumeMounts:
+        - name: wireguard-config
+          mountPath: /config
+        - name: lib-modules
+          mountPath: /lib/modules
+          readOnly: true
+      containers:
+      - name: wireguard
+        image: linuxserver/wireguard:latest
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+            - SYS_MODULE
+          privileged: true
+        env:
+        - name: TZ
+          value: "UTC"
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        volumeMounts:
+        - name: wireguard-config
+          mountPath: /config
+        - name: lib-modules
+          mountPath: /lib/modules
+          readOnly: true
+        command:
+        - sh
+        - -c
+        - |
+          echo "Keeping WireGuard alive..."
+          while true; do
+            if ! wg show wg0 > /dev/null 2>&1; then
+              echo "WireGuard interface down, bringing it up..."
+              wg-quick up wg0 || true
+            fi
+            sleep 60
+          done
+      - name: qbittorrent
+        image: linuxserver/qbittorrent:latest
+        ports:
+        - containerPort: 8080
+          name: webui
+          protocol: TCP
+        env:
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        - name: TZ
+          value: "UTC"
+        - name: WEBUI_PORT
+          value: "8080"
+        volumeMounts:
+        - name: config
+          mountPath: /config
+        - name: downloads
+          mountPath: /downloads
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: qbittorrent-config
+      - name: downloads
+        persistentVolumeClaim:
+          claimName: qbittorrent-downloads
+      - name: wireguard-config
+        secret:
+          secretName: wireguard-config
+      - name: lib-modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
