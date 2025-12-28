@@ -1,0 +1,60 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: jellyfin
+  namespace: media
+spec:
+  hosts:
+  - "jellyfin.local"
+  gateways:
+  - media-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: jellyfin.media.svc.cluster.local
+        port:
+          number: 8096
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: qbittorrent
+  namespace: media
+spec:
+  hosts:
+  - "qbittorrent.local"
+  gateways:
+  - media-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: qbittorrent.media.svc.cluster.local
+        port:
+          number: 8080
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: debrid-media-manager
+  namespace: media
+spec:
+  hosts:
+  - "debrid.local"
+  gateways:
+  - media-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: debrid-media-manager.media.svc.cluster.local
+        port:
+          number: 3000

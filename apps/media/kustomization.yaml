@@ -14,4 +14,5 @@ resources:
   - debrid-media-manager-deployment.yaml
   - debrid-media-manager-service.yaml
   - networkpolicy.yaml
-  - httproute.yaml
+  - istio-gateway.yaml
+  - istio-virtualservice.yaml
