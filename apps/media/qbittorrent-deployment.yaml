@@ -107,11 +107,13 @@ spec:
             cpu: "1000m"
       volumes:
       - name: config
-        persistentVolumeClaim:
-          claimName: qbittorrent-config
+        hostPath:
+          path: /mnt/media/qbittorrent/config
+          type: DirectoryOrCreate
       - name: downloads
-        persistentVolumeClaim:
-          claimName: qbittorrent-downloads
+        hostPath:
+          path: /mnt/media/downloads
+          type: DirectoryOrCreate
       - name: wireguard-config
         secret:
           secretName: wireguard-config

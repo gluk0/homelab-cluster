@@ -46,10 +46,14 @@ spec:
             cpu: "2000m"
       volumes:
       - name: config
-        persistentVolumeClaim:
-          claimName: jellyfin-config
+        hostPath:
+          path: /mnt/media/jellyfin/config
+          type: DirectoryOrCreate
       - name: cache
-        persistentVolumeClaim:
-          claimName: jellyfin-cache
+        hostPath:
+          path: /mnt/media/jellyfin/cache
+          type: DirectoryOrCreate
       - name: media
-        emptyDir: {}
+        hostPath:
+          path: /mnt/media/library
+          type: DirectoryOrCreate

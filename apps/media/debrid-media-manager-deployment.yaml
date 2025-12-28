@@ -40,5 +40,6 @@ spec:
             cpu: "500m"
       volumes:
       - name: data
-        persistentVolumeClaim:
-          claimName: debrid-media-manager-data
+        hostPath:
+          path: /mnt/media/debrid-media-manager/data
+          type: DirectoryOrCreate
