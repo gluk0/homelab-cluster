@@ -16,9 +16,11 @@ spec:
   install:
     remediation:
       retries: 3
+    timeout: 10m
   upgrade:
     remediation:
       retries: 3
+    timeout: 10m
   values:
     global:
       imagePullSecrets:
@@ -148,7 +150,7 @@ spec:
         - treatmentnotify
 
       auth:
-        defaultRoles: "denied"  # Require authentication for all visits
+        defaultRoles: "status-only"  # Allow health checks, require auth for web UI
 
       alarms:
         types: "simple"
