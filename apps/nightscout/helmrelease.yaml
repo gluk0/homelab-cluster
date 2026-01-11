@@ -90,6 +90,38 @@ spec:
           cpu: 250m
           memory: 256Mi
 
+    startupProbe:
+      enabled: true
+      probe:
+        httpGet:
+          path: /api/v1/status
+          port: http
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        timeoutSeconds: 5
+        failureThreshold: 60  # 60 * 10s = 10 minutes max startup time
+
+    livenessProbe:
+      httpGet:
+        path: /api/v1/status
+        port: http
+        scheme: HTTP
+      initialDelaySeconds: 60
+      periodSeconds: 30
+      timeoutSeconds: 10
+      failureThreshold: 3
+
+    readinessProbe:
+      httpGet:
+        path: /api/v1/status
+        port: http
+        scheme: HTTP
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+
     nightscout:
       # MongoDB URI and API secret will be auto-generated
       # Leave commented to use integrated MongoDB and auto-generated secret
