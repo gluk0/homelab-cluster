@@ -70,6 +70,8 @@ spec:
       enabled: true
       image:
         tag: "7.0.12-debian-12-r7"
+        pullSecrets:
+          - dockerhub-pull-secret
       auth:
         database: nightscout
         username: nightscout
