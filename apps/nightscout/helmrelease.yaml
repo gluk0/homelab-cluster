@@ -72,6 +72,8 @@ spec:
     # Secrets are auto-generated
     mongodb:
       enabled: true
+      image:
+        tag: "latest"
       auth:
         enabled: true
         database: nightscout
