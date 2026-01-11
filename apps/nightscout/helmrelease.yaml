@@ -72,8 +72,6 @@ spec:
     # Secrets are auto-generated
     mongodb:
       enabled: true
-      image:
-        tag: "7.0.6-debian-12-r0"
       auth:
         enabled: true
         database: nightscout
