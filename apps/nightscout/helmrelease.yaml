@@ -65,16 +65,14 @@ spec:
         allowExternal: true
 
     # MongoDB is now integrated into the chart
-    # Secrets are auto-generated
+    # Secrets are auto-generated  
     mongodb:
       enabled: true
       image:
         pullSecrets:
           - dockerhub-pull-secret
       auth:
-        database: nightscout
-        username: nightscout
-        # Password will be auto-generated
+        enabled: false
       persistence:
         enabled: true
         size: 8Gi
