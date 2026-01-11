@@ -8,11 +8,10 @@ spec:
   interval: 30m
   chart:
     spec:
-      chart: nightscout
-      version: '1.x'
+      chart: ./
       sourceRef:
-        kind: HelmRepository
-        name: nightscout
+        kind: GitRepository
+        name: helm-nightscout
         namespace: flux-system
   install:
     remediation:
