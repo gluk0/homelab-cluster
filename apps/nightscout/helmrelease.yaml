@@ -127,6 +127,7 @@ spec:
       # Leave commented to use integrated MongoDB and auto-generated secret
 
       baseUrl: "https://nightscout.gluk0.sh"
+      insecureUseHttp: true  # TLS terminated at Cloudflare tunnel
 
       enable:
         - careportal
