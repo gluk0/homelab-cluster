@@ -85,12 +85,7 @@ spec:
 
     nightscout:
       # MongoDB URI and API secret will be auto-generated
-      # Leave empty to use integrated MongoDB
-      mongodbUri: ""
-      apiSecret: ""
-
-      # No need for existingSecret anymore - handled automatically
-      existingSecret: ""
+      # Leave commented to use integrated MongoDB and auto-generated secret
 
       baseUrl: "https://nightscout.gluk0.sh"
 
