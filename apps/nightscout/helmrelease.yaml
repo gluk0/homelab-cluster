@@ -69,7 +69,6 @@ spec:
     mongodb:
       enabled: true
       image:
-        tag: "8.0.4-debian-12-r2"
         pullSecrets:
           - dockerhub-pull-secret
       auth:
