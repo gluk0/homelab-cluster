@@ -6,3 +6,4 @@ resources:
   - metallb
   - istio
   - monitoring
+  - local-path-provisioner
