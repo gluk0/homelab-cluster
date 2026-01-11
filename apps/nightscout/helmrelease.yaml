@@ -148,7 +148,7 @@ spec:
         - treatmentnotify
 
       auth:
-        defaultRoles: "readable"
+        defaultRoles: "denied"  # Require authentication for all visits
 
       alarms:
         types: "simple"
