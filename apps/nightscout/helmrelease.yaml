@@ -1,0 +1,118 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: nightscout
+  namespace: nightscout
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: nightscout
+      version: '1.x'
+      sourceRef:
+        kind: HelmRepository
+        name: nightscout
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: nightscout/cgm-remote-monitor
+      tag: "15.0.3"
+
+    replicaCount: 1
+
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+
+    service:
+      type: ClusterIP
+      port: 1337
+
+    ingress:
+      enabled: true
+      className: "istio"
+      annotations:
+        cert-manager.io/cluster-issuer: "selfsigned-issuer"
+      hosts:
+        - host: nightscout.homelab.local
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - secretName: nightscout-tls
+          hosts:
+            - nightscout.homelab.local
+
+    networkPolicy:
+      enabled: true
+      ingress:
+        enabled: true
+        namespaceSelector:
+          matchLabels:
+            name: istio-system
+      egress:
+        enabled: true
+        allowExternal: true
+
+    # MongoDB is now integrated into the chart
+    # Secrets are auto-generated
+    mongodb:
+      enabled: true
+      auth:
+        database: nightscout
+        username: nightscout
+        # Password will be auto-generated
+      persistence:
+        enabled: true
+        size: 8Gi
+      resources:
+        limits:
+          cpu: 500m
+          memory: 512Mi
+        requests:
+          cpu: 250m
+          memory: 256Mi
+
+    nightscout:
+      # MongoDB URI and API secret will be auto-generated
+      # Leave empty to use integrated MongoDB
+      mongodbUri: ""
+      apiSecret: ""
+
+      # No need for existingSecret anymore - handled automatically
+      existingSecret: ""
+
+      baseUrl: "https://nightscout.gluk0.sh"
+
+      enable:
+        - careportal
+        - boluscalc
+        - food
+        - rawbg
+        - iob
+        - cob
+        - bwp
+        - cage
+        - sage
+        - iage
+        - bage
+        - basal
+        - ar2
+        - treatmentnotify
+
+      auth:
+        defaultRoles: "readable"
+
+      alarms:
+        types: "simple"
