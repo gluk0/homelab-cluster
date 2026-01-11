@@ -32,11 +32,11 @@ spec:
 
     resources:
       limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
         cpu: 500m
         memory: 512Mi
-      requests:
-        cpu: 250m
-        memory: 256Mi
 
     service:
       type: ClusterIP
@@ -100,7 +100,7 @@ spec:
         initialDelaySeconds: 30
         periodSeconds: 10
         timeoutSeconds: 5
-        failureThreshold: 60  # 60 * 10s = 10 minutes max startup time
+        failureThreshold: 180  # 180 * 10s = 30 minutes max startup time
 
     livenessProbe:
       httpGet:
