@@ -68,6 +68,10 @@ spec:
     # Secrets are auto-generated
     mongodb:
       enabled: true
+      image:
+        registry: docker.io
+        repository: mongo
+        tag: "7.0"
       auth:
         database: nightscout
         username: nightscout
