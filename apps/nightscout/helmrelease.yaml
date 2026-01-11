@@ -20,6 +20,10 @@ spec:
     remediation:
       retries: 3
   values:
+    global:
+      imagePullSecrets:
+        - dockerhub-pull-secret
+
     image:
       repository: nightscout/cgm-remote-monitor
       tag: "15.0.3"
@@ -65,12 +69,11 @@ spec:
         allowExternal: true
 
     # MongoDB is now integrated into the chart
-    # Secrets are auto-generated  
+    # Secrets are auto-generated
     mongodb:
       enabled: true
       image:
-        pullSecrets:
-          - dockerhub-pull-secret
+        tag: "8.0.4-debian-12-r0"
       auth:
         enabled: false
       persistence:
