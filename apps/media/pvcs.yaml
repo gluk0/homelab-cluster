@@ -84,11 +84,11 @@ metadata:
   namespace: media
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   storageClassName: local-path
   resources:
     requests:
-      storage: 100Gi
+      storage: 50Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -97,8 +97,8 @@ metadata:
   namespace: media
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   storageClassName: local-path
   resources:
     requests:
-      storage: 50Gi
+      storage: 30Gi
