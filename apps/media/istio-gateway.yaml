@@ -13,8 +13,8 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "jellyfin.local"
-    - "qbittorrent.local"
-    - "prowlarr.local"
-    - "sonarr.local"
-    - "radarr.local"
+    - "jellyfin.homelab.local"
+    - "qbittorrent.homelab.local"
+    - "prowlarr.homelab.local"
+    - "sonarr.homelab.local"
+    - "radarr.homelab.local"

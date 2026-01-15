@@ -1,6 +1,4 @@
 #!/bin/bash
-# Script to switch between WireGuard VPN configs easily
-
 set -e
 
 NAMESPACE="media"
@@ -56,7 +54,6 @@ fi
 
 CONFIG_NAME="$1"
 
-# Check if config exists in ConfigMap
 if ! kubectl get configmap ${CONFIGMAP_NAME} -n ${NAMESPACE} -o json 2>/dev/null | \
      jq -e ".data[\"${CONFIG_NAME}\"]" > /dev/null; then
     echo "Error: Config '${CONFIG_NAME}' not found in ConfigMap"
@@ -74,7 +71,6 @@ echo "=== Switching WireGuard VPN Config ==="
 echo "New config: ${CONFIG_NAME}"
 echo ""
 
-# Extract the config from ConfigMap and create Secret
 kubectl get configmap ${CONFIGMAP_NAME} -n ${NAMESPACE} -o json | \
     jq -r ".data[\"${CONFIG_NAME}\"]" | \
     kubectl create secret generic ${SECRET_NAME} \
@@ -85,7 +81,6 @@ kubectl get configmap ${CONFIGMAP_NAME} -n ${NAMESPACE} -o json | \
 echo "✓ Secret '${SECRET_NAME}' updated with ${CONFIG_NAME}"
 echo ""
 
-# Restart qBittorrent if it exists
 if kubectl get deployment qbittorrent -n ${NAMESPACE} &> /dev/null; then
     echo "Restarting qBittorrent to apply new VPN config..."
     kubectl rollout restart deployment/qbittorrent -n ${NAMESPACE}
@@ -96,7 +91,6 @@ if kubectl get deployment qbittorrent -n ${NAMESPACE} &> /dev/null; then
     echo ""
     echo "✓ qBittorrent is ready with new VPN config"
     echo ""
-    echo "Verifying VPN connection..."
     sleep 10
     VPN_IP=$(kubectl exec -n ${NAMESPACE} deployment/qbittorrent -c qbittorrent -- curl -s --max-time 10 ifconfig.me 2>/dev/null || echo "Unable to determine")
     echo "VPN IP: ${VPN_IP}"
