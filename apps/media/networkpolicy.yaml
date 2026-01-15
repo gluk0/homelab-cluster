@@ -1,0 +1,155 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: media-default-deny
+  namespace: media
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: jellyfin-policy
+  namespace: media
+spec:
+  podSelector:
+    matchLabels:
+      app: jellyfin
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: istio-system
+    ports:
+    - protocol: TCP
+      port: 8096
+  egress:
+  - {}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: qbittorrent-policy
+  namespace: media
+spec:
+  podSelector:
+    matchLabels:
+      app: qbittorrent
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: istio-system
+    ports:
+    - protocol: TCP
+      port: 8080
+  egress:
+  - {}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: prowlarr-policy
+  namespace: media
+spec:
+  podSelector:
+    matchLabels:
+      app: prowlarr
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: istio-system
+    - podSelector:
+        matchLabels:
+          app: sonarr
+    - podSelector:
+        matchLabels:
+          app: radarr
+    ports:
+    - protocol: TCP
+      port: 9696
+  egress:
+  - {}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: sonarr-policy
+  namespace: media
+spec:
+  podSelector:
+    matchLabels:
+      app: sonarr
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: istio-system
+    ports:
+    - protocol: TCP
+      port: 8989
+  egress:
+  - {}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: radarr-policy
+  namespace: media
+spec:
+  podSelector:
+    matchLabels:
+      app: radarr
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: istio-system
+    ports:
+    - protocol: TCP
+      port: 7878
+  egress:
+  - {}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: debrid-media-manager-policy
+  namespace: media
+spec:
+  podSelector:
+    matchLabels:
+      app: debrid-media-manager
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: istio-system
+    ports:
+    - protocol: TCP
+      port: 3000
+  egress:
+  - {}
