@@ -17,7 +17,22 @@ spec:
     metadata:
       labels:
         app: sonarr
+        media-group: shared-storage
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: k8s-worker-03
+      affinity:
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: media-group
+                  operator: In
+                  values:
+                  - shared-storage
+              topologyKey: kubernetes.io/hostname
       containers:
       - name: sonarr
         image: linuxserver/sonarr:latest

@@ -62,7 +62,7 @@ spec:
   storageClassName: local-path
   resources:
     requests:
-      storage: 5Gi
+      storage: 10Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -88,7 +88,20 @@ spec:
   storageClassName: local-path
   resources:
     requests:
-      storage: 20Gi
+      storage: 100Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: media-library
+  namespace: media
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 100Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -101,4 +114,4 @@ spec:
   storageClassName: local-path
   resources:
     requests:
-      storage: 15Gi
+      storage: 30Gi

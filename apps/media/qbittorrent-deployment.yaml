@@ -17,9 +17,12 @@ spec:
     metadata:
       labels:
         app: qbittorrent
+        media-group: shared-storage
       annotations:
         sidecar.istio.io/inject: "false"
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: k8s-worker-03
       initContainers:
       - name: wireguard-init
         image: linuxserver/wireguard:latest
@@ -38,7 +41,11 @@ spec:
             echo "WireGuard config not found! Using placeholder."
             exit 1
           fi
-          wg-quick up wg0 || true
+          # Create modified config in /tmp with manual DNS setup
+          sed '/^DNS/d' /config/wg0.conf > /tmp/wg0.conf
+          # Add PostUp to set Mullvad DNS manually
+          sed -i '/\[Interface\]/a PostUp = echo "nameserver 10.64.0.1" > /etc/resolv.conf' /tmp/wg0.conf
+          wg-quick up /tmp/wg0.conf || true
           echo "WireGuard VPN is up"
         volumeMounts:
         - name: wireguard-config
@@ -73,10 +80,14 @@ spec:
         - -c
         - |
           echo "Keeping WireGuard alive..."
+          # Create modified config in /tmp with manual DNS setup
+          sed '/^DNS/d' /config/wg0.conf > /tmp/wg0.conf
+          # Add PostUp to set Mullvad DNS manually
+          sed -i '/\[Interface\]/a PostUp = echo "nameserver 10.64.0.1" > /etc/resolv.conf' /tmp/wg0.conf
           while true; do
             if ! wg show wg0 > /dev/null 2>&1; then
               echo "WireGuard interface down, bringing it up..."
-              wg-quick up wg0 || true
+              wg-quick up /tmp/wg0.conf || true
             fi
             sleep 60
           done
