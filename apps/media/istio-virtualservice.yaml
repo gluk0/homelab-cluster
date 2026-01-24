@@ -1,0 +1,100 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: jellyfin
+  namespace: media
+spec:
+  hosts:
+  - "jellyfin.homelab.local"
+  gateways:
+  - media-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: jellyfin.media.svc.cluster.local
+        port:
+          number: 8096
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: qbittorrent
+  namespace: media
+spec:
+  hosts:
+  - "qbittorrent.homelab.local"
+  gateways:
+  - media-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: qbittorrent.media.svc.cluster.local
+        port:
+          number: 8080
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: prowlarr
+  namespace: media
+spec:
+  hosts:
+  - "prowlarr.homelab.local"
+  gateways:
+  - media-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: prowlarr.media.svc.cluster.local
+        port:
+          number: 9696
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: sonarr
+  namespace: media
+spec:
+  hosts:
+  - "sonarr.homelab.local"
+  gateways:
+  - media-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: sonarr.media.svc.cluster.local
+        port:
+          number: 8989
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: radarr
+  namespace: media
+spec:
+  hosts:
+  - "radarr.homelab.local"
+  gateways:
+  - media-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: radarr.media.svc.cluster.local
+        port:
+          number: 7878
