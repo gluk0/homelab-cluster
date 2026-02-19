@@ -23,13 +23,56 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       automountServiceAccountToken: false
+      initContainers:
+      - name: generate-config
+        image: matrixdotorg/synapse:latest
+        command: 
+        - /bin/sh
+        - -c
+        - |
+          if [ ! -f /data/homeserver.yaml ]; then
+            /start.py generate
+            cat > /data/homeserver.yaml <<'EOF'
+          server_name: "commune.gluk0.sh"
+          public_baseurl: "https://commune.gluk0.sh"
+          
+          listeners:
+            - port: 8008
+              type: http
+              tls: false
+              bind_addresses: ['0.0.0.0']
+              x_forwarded: true
+              resources:
+                - names: [client, federation]
+                  compress: false
+          
+          database:
+            name: sqlite3
+            args:
+              database: /data/homeserver.db
+          
+          log_config: "/data/commune.gluk0.sh.log.config"
+          media_store_path: /data/media_store
+          
+          enable_registration: true
+          enable_registration_without_verification: false
+          
+          suppress_key_server_warning: true
+          
+          trusted_key_servers:
+            - server_name: "matrix.org"
+          EOF
+          fi
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        securityContext:
+          runAsUser: 991
+          allowPrivilegeEscalation: false
       volumes:
       - name: data
         persistentVolumeClaim:
           claimName: matrix-data
-      - name: config
-        configMap:
-          name: matrix-config
       - name: tmp
         emptyDir: {}
       containers:
@@ -40,11 +83,6 @@ spec:
         - containerPort: 8008
           name: http
           protocol: TCP
-        env:
-        - name: SYNAPSE_SERVER_NAME
-          value: "commune.gluk0.sh"
-        - name: SYNAPSE_REPORT_STATS
-          value: "no"
         livenessProbe:
           httpGet:
             path: /health
@@ -77,7 +115,5 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /data
-        - name: config
-          mountPath: /config
         - name: tmp
           mountPath: /tmp
