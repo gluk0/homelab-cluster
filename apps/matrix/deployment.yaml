@@ -26,6 +26,11 @@ spec:
       initContainers:
       - name: generate-config
         image: matrixdotorg/synapse:latest
+        env:
+        - name: SYNAPSE_SERVER_NAME
+          value: "commune.gluk0.sh"
+        - name: SYNAPSE_REPORT_STATS
+          value: "no"
         command: 
         - /bin/sh
         - -c
