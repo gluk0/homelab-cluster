@@ -6,7 +6,7 @@ metadata:
   namespace: matrix
 spec:
   hosts:
-  - "sheet.gluk0.sh"
+  - "commune.gluk0.sh"
   gateways:
   - matrix-gateway
   http:

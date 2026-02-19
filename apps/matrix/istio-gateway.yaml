@@ -13,4 +13,4 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "sheet.gluk0.sh"
+    - "commune.gluk0.sh"

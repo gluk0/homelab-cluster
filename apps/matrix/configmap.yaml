@@ -6,8 +6,8 @@ metadata:
   namespace: matrix
 data:
   homeserver.yaml: |
-    server_name: "sheet.gluk0.sh"
-    public_baseurl: "https://sheet.gluk0.sh"
+    server_name: "commune.gluk0.sh"
+    public_baseurl: "https://commune.gluk0.sh"
     
     listeners:
       - port: 8008

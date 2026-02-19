@@ -42,7 +42,7 @@ spec:
           protocol: TCP
         env:
         - name: SYNAPSE_SERVER_NAME
-          value: "sheet.gluk0.sh"
+          value: "commune.gluk0.sh"
         - name: SYNAPSE_REPORT_STATS
           value: "no"
         livenessProbe:
