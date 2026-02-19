@@ -31,43 +31,25 @@ spec:
           value: "commune.gluk0.sh"
         - name: SYNAPSE_REPORT_STATS
           value: "no"
+        - name: SYNAPSE_CONFIG_DIR
+          value: "/data"
+        - name: SYNAPSE_CONFIG_PATH
+          value: "/data/homeserver.yaml"
+        - name: SYNAPSE_DATA_DIR
+          value: "/data"
         command: 
         - /bin/sh
         - -c
         - |
           if [ ! -f /data/homeserver.yaml ]; then
+            echo "Generating initial config..."
             /start.py generate
-            cat > /data/homeserver.yaml <<'EOF'
-          server_name: "commune.gluk0.sh"
-          public_baseurl: "https://commune.gluk0.sh"
-          report_stats: false
-          
-          listeners:
-            - port: 8008
-              type: http
-              tls: false
-              bind_addresses: ['0.0.0.0']
-              x_forwarded: true
-              resources:
-                - names: [client, federation]
-                  compress: false
-          
-          database:
-            name: sqlite3
-            args:
-              database: /data/homeserver.db
-          
-          log_config: "/data/commune.gluk0.sh.log.config"
-          media_store_path: /data/media_store
-          
-          enable_registration: true
-          enable_registration_without_verification: false
-          
-          suppress_key_server_warning: true
-          
-          trusted_key_servers:
-            - server_name: "matrix.org"
-          EOF
+            echo "Updating config with report_stats..."
+            sed -i 's/# report_stats:.*/report_stats: false/' /data/homeserver.yaml
+            echo "Config generated successfully"
+          else
+            echo "Config already exists, skipping generation"
+          fi
           fi
         volumeMounts:
         - name: data
