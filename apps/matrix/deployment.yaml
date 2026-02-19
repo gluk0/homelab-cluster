@@ -40,6 +40,7 @@ spec:
             cat > /data/homeserver.yaml <<'EOF'
           server_name: "commune.gluk0.sh"
           public_baseurl: "https://commune.gluk0.sh"
+          report_stats: false
           
           listeners:
             - port: 8008
