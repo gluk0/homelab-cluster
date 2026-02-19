@@ -1,0 +1,83 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: matrix-synapse
+  namespace: matrix
+  labels:
+    app: matrix-synapse
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: matrix-synapse
+  template:
+    metadata:
+      labels:
+        app: matrix-synapse
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 991
+        fsGroup: 991
+        seccompProfile:
+          type: RuntimeDefault
+      automountServiceAccountToken: false
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: matrix-data
+      - name: config
+        configMap:
+          name: matrix-config
+      - name: tmp
+        emptyDir: {}
+      containers:
+      - name: synapse
+        image: matrixdotorg/synapse:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8008
+          name: http
+          protocol: TCP
+        env:
+        - name: SYNAPSE_SERVER_NAME
+          value: "sheet.gluk0.sh"
+        - name: SYNAPSE_REPORT_STATS
+          value: "no"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8008
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8008
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        resources:
+          requests:
+            cpu: 500m
+            memory: 512Mi
+          limits:
+            cpu: 2000m
+            memory: 2Gi
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 991
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
+          seccompProfile:
+            type: RuntimeDefault
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+        - name: tmp
+          mountPath: /tmp

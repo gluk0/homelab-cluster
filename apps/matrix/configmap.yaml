@@ -1,0 +1,36 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: matrix-config
+  namespace: matrix
+data:
+  homeserver.yaml: |
+    server_name: "sheet.gluk0.sh"
+    public_baseurl: "https://sheet.gluk0.sh"
+    
+    listeners:
+      - port: 8008
+        type: http
+        tls: false
+        bind_addresses: ['0.0.0.0']
+        x_forwarded: true
+        resources:
+          - names: [client, federation]
+            compress: false
+    
+    database:
+      name: sqlite3
+      args:
+        database: /data/homeserver.db
+    
+    log_config: "/data/log.config"
+    media_store_path: /data/media_store
+    
+    enable_registration: true
+    enable_registration_without_verification: false
+    
+    suppress_key_server_warning: true
+    
+    trusted_key_servers:
+      - server_name: "matrix.org"
