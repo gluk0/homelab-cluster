@@ -150,7 +150,7 @@ spec:
         - treatmentnotify
 
       auth:
-        defaultRoles: "status-only"  # Allow health checks, require auth for web UI
+        defaultRoles: "readable"  # Allow viewing without auth, protect write operations
 
       alarms:
         types: "simple"
